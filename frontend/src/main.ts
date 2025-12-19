@@ -154,28 +154,28 @@ class MAPFApp {
         </div>
         
         <!-- BOTTOM: Grid Visualization (Full Width) -->
-        <div>
+        <div style="max-width: 100%; overflow: hidden;">
           <div id="single-mode">
-            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
-              <div class="card">
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; max-width: 100%;">
+              <div class="card" style="min-width: 0;">
                 <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">Visualization</h2>
                 <div id="single-grid-container" class="mt-4"></div>
               </div>
-              <div>
+              <div style="min-width: 0;">
                 <div id="single-metrics"></div>
               </div>
             </div>
           </div>
           
           <div id="comparison-mode" class="hidden">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-              <div class="card">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 100%;">
+              <div class="card" style="min-width: 0;">
                 <h3 style="font-size: 1.5rem;">Left Grid</h3>
                 <div id="left-grid-container"></div>
                 <div id="left-metrics-sidebar" class="mt-4"></div>
               </div>
               
-              <div class="card">
+              <div class="card" style="min-width: 0;">
                 <h3 style="font-size: 1.5rem;">Right Grid</h3>
                 <div id="right-grid-container"></div>
                 <div id="right-metrics-sidebar" class="mt-4"></div>
@@ -344,7 +344,6 @@ class MAPFApp {
     gridDiv.className = 'grid-container';
     gridDiv.style.gridTemplateColumns = `repeat(${this.size}, 1fr)`;
     gridDiv.style.gridTemplateRows = `repeat(${this.size}, 1fr)`;
-    gridDiv.style.maxHeight = '70vh';
     gridDiv.style.aspectRatio = '1';
     
     for (let r = 0; r < this.size; r++) {
