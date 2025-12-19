@@ -139,7 +139,11 @@ async def run_algorithm(request: RunAlgorithmRequest):
     elif request.algorithm == "cbs":
         result = cbs(agents, blocks, size, max_time)
     elif request.algorithm == "mip":
-        result = mip_solver(agents, blocks, size, min(max_time, 50))
+        # MIP needs much smaller time horizons to be tractable
+        # Estimate: 2 * grid_size is usually enough for optimal path
+        mip_time_limit = min(max_time, size * 3, 30)
+        print(f"  MIP time limit: {mip_time_limit} (reduced from {max_time})")
+        result = mip_solver(agents, blocks, size, mip_time_limit)
     else:
         return RunAlgorithmResponse(
             paths=None,

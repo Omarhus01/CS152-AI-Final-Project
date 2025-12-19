@@ -116,8 +116,9 @@ def mip_solver(
                         x[i][v][t] for i in range(len(agents)) if v in x[i]
                     ]) <= 1
     
-    # Solve
-    prob.solve(PULP_CBC_CMD(msg=0))
+    # Solve with timeout
+    # Set a 30 second timeout to prevent hanging
+    prob.solve(PULP_CBC_CMD(msg=0, timeLimit=30))
     
     solve_time = (time_module.time() - start_time_exec) * 1000
     

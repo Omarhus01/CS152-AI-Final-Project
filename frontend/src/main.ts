@@ -270,7 +270,7 @@ class MAPFApp {
       'independent': 'Grid ≤20, Agents ≤8, Obstacles ≤40% • Fast, shows conflicts for analysis',
       'cooperative': 'Grid ≤15, Agents ≤6, Obstacles ≤30% • Balanced speed and quality',
       'cbs': 'Grid ≤12, Agents ≤4, Obstacles ≤25% • Slow but optimal, avoid large scenarios',
-      'mip': 'Grid ≤10, Agents ≤3, Obstacles ≤20% • VERY SLOW, only for small problems'
+      'mip': 'Grid ≤8, Agents ≤2, Obstacles ≤15% • VERY SLOW, only for tiny problems'
     };
     
     const recommendationEl = document.getElementById('algo-recommendation');
