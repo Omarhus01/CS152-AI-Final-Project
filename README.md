@@ -1,292 +1,353 @@
-# Multi-Agent Pathfinding System
-## CS152 Final Project - Artificial Intelligence
+# 🤖 Multi-Agent Pathfinding (MAPF) Visualizer
 
-**Author:** Omar Huss  
-**Course:** CS152 - Artificial Intelligence  
-**Project:** Multi-Agent Navigation with Conflict Resolution
+A full-stack web application for visualizing and comparing Multi-Agent Pathfinding algorithms. Built with FastAPI (Python) backend and Vite + TypeScript frontend.
 
----
+![Tests](https://img.shields.io/badge/Tests-23%20Passing-green) ![Python](https://img.shields.io/badge/Python-3.11-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
 
-## Project Overview
+## 📋 About This Project
 
-This project implements and compares multiple algorithms for Multi-Agent Pathfinding (MAPF), a fundamental challenge in AI where multiple autonomous agents must navigate to their goals while avoiding collisions. The system demonstrates:
+Multi-Agent Pathfinding (MAPF) finds collision-free paths for multiple agents simultaneously. Unlike single-agent pathfinding, **all agents must reach their goals without conflicts** (no two agents in same cell at same time, no edge crossing). This is an NP-hard problem.
 
-- **Space-Time A*** pathfinding in (x,y,t) state space
-- **Cooperative A*** with priority-based planning and reservation tables
-- **Conflict-Based Search (CBS)** for optimal multi-agent coordination
-- **MIP/ILP solver** for small-scale optimal solutions
-- **Prolog-based logic** for priority policies and conflict resolution rules
+### Implemented Algorithms
 
-### Targeted Learning Outcomes
-- **#search** - Space-time A*, CBS high-level search, heuristics
-- **#ailogic** - Prolog rules for prioritization, conflict resolution, deadlock detection
-- **#aicoding** - Modular implementation, testing, reproducibility
+1. **Independent A*** - Fast, may show conflicts ⚡
+2. **Cooperative A*** - Uses reservation table to avoid conflicts 🏃
+3. **Conflict-Based Search (CBS)** - Optimal solution, exponential with agents 🐢
+4. **Mixed Integer Programming (MIP)** - Provably optimal, very slow 🐌
 
 ---
 
-## Key Features
+## 🚀 Quick Start
 
-✓ **Enhanced Interactive GUI** with side-by-side comparison mode  
-✓ **Multiple Algorithms** - Independent A*, Cooperative A*, CBS, MIP  
-✓ **Manual Controls** - Adjustable obstacle density, agent count, grid size  
-✓ **Dual-Grid Comparison** - Run different algorithms simultaneously  
-✓ **Conflict Detection** - Vertex and edge collision detection  
-✓ **Scenario Generator** - Open field, corridors, bottlenecks, intersections  
-✓ **Prolog Integration** - Logic-based decision making  
-✓ **Comprehensive Metrics** - SOC, makespan, conflicts, node expansions  
+### Prerequisites
 
----
+- **Python 3.11** or higher
+- **Node.js 18** or higher  
+- **npm** (comes with Node.js)
 
-## Installation
+### Installation & Running
 
-### Requirements
-- Python 3.8+
-- SWI-Prolog (optional, for logic rules)
-
-### Setup
-
+**1. Clone the repository:**
 ```bash
-# Clone the repository
 git clone https://github.com/Omarhus01/CS152-AI-Final-Project.git
 cd CS152-AI-Final-Project
+```
 
-# Install dependencies
+**2. Start the Backend (Terminal 1):**
+```bash
+cd backend
 pip install -r requirements.txt
+python server.py
 ```
+✅ Backend running at: `http://localhost:8000`
 
-### Dependencies
-- `numpy` - Array operations
-- `pygame` - GUI and visualization
-- `matplotlib` - Plotting (for analysis)
-- `pulp` - MIP solver
-- `pyswip` - Prolog interface (optional)
+**3. Start the Frontend (Terminal 2):**
+```bash
+cd frontend
+npm install
+npm run dev
+```
+✅ Frontend running at: `http://localhost:5173`
+
+**4. Open your browser:**
+Navigate to `http://localhost:5173` and start visualizing!
 
 ---
 
-## Usage
+## 🧪 Running Tests
 
-### Interactive GUI
-
-Run the main application with an interactive graphical interface:
+All 23 tests passing! ✅
 
 ```bash
-python main.py
+cd backend
+pip install -r requirements-test.txt
+pytest tests/ -v
 ```
 
-**GUI Controls:**
-- Select algorithm (Independent A*, Cooperative A*, CBS)
-- Choose predefined scenarios (Open Field, Corridor, Bottleneck)
-- Play/Pause/Step through animations
-- Toggle agent trails
-- View real-time metrics
-
-**Keyboard Shortcuts:**
-- `SPACE` - Play/Pause
-- `→` - Step forward
-- `←` - Step backward
-- `R` - Reset
-
-### Command-Line Options
-
-```bash
-# Run with specific scenario
-python main.py --scenario corridor --agents 6 --grid-size 20
-
-# Run with reproducible seed
-python main.py --scenario bottleneck --agents 8 --seed 42
-```
-
-### Algorithm Comparison
-
-Run automated benchmarks comparing all algorithms:
-
-```bash
-# Compare algorithms on multiple scenarios
-python compare.py --scenarios 5 --agents 4 6 8 --output results.json
-
-# Run with specific parameters
-python compare.py --scenarios 3 --agents 6 --grid-size 15 --seed 123
-```
-
-This generates:
-- Console output with metrics
-- JSON file with detailed results
-- Comparison data for analysis
-
-### Running Tests
-
-```bash
-# Run all unit tests
-python -m unittest discover tests
-
-# Run specific test file
-python -m unittest tests.test_core
-```
+**Test Coverage:**
+- ✅ Algorithm correctness (Independent A*, Cooperative A*, CBS, MIP)
+- ✅ Edge cases (blocked goals, agents at goal, large grids)
+- ✅ API endpoints (generate scenario, run algorithms)
+- ✅ Error handling (invalid inputs, missing fields)
 
 ---
 
-## Project Structure
+## 🎮 How to Use
+
+### Configuration Panel
+1. **Grid Size:** 5-20 (recommended ≤15 for best performance)
+2. **Number of Agents:** 1-10 (recommended ≤6)
+3. **Obstacles:** 0-50% (recommended ≤30%)
+
+### Single Algorithm Mode
+1. Click **"Generate New Scenario"** to create a random grid
+2. Select an algorithm from the dropdown
+3. Adjust animation speed if desired
+4. Click **"Run Algorithm"** to visualize the pathfinding
+
+### Comparison Mode
+1. Click **"Enable Comparison Mode"**
+2. Select two different algorithms to compare
+3. Click **"Run Both Algorithms"**
+4. Watch them solve the same scenario side-by-side
+
+### Understanding the Visualization
+- 🟦 **Blue cells:** Obstacles
+- 🟩 **Green circles:** Start positions (numbered by agent ID)
+- 🎯 **Target icons:** Goal positions
+- 🔴 **Red cells:** Conflicts (two agents in same cell)
+- **Colored paths:** Each agent has a unique color trail
+
+---
+
+## 📊 Performance Recommendations
+
+| Grid Size | Agents | Obstacles | Best Algorithms |
+|-----------|--------|-----------|----------------|
+| 5-10      | 2-4    | 10-20%    | All algorithms work well |
+| 10-15     | 4-6    | 20-30%    | Avoid MIP (too slow) |
+| 15-20     | 6-8    | 20-30%    | Independent A*, Cooperative A* only |
+| >20       | >8     | >30%      | Not recommended (very slow) |
+
+**Algorithm Performance:**
+- **Independent A*:** Fastest, may have conflicts ⚡
+- **Cooperative A*:** Fast, usually no conflicts 🏃
+- **CBS:** Optimal, slow with many agents 🐢
+- **MIP:** Optimal, very slow (grid ≤10 only) 🐌
+
+---
+
+## 🏗️ Project Structure
 
 ```
 CS152-AI-Final-Project/
-├── src/
-│   ├── core/
-│   │   ├── grid.py              # Grid environment
-│   │   ├── agent.py             # Agent representation
-│   │   ├── conflict.py          # Conflict detection
-│   │   └── reservation.py       # Reservation table
-│   ├── algorithms/
-│   │   ├── space_time_astar.py  # Space-Time A*
-│   │   ├── independent.py       # Independent A* baseline
-│   │   ├── cooperative.py       # Cooperative A*
-│   │   ├── cbs.py               # Conflict-Based Search
-│   │   └── mip_solver.py        # MIP/ILP solver
-│   ├── logic/
-│   │   └── prolog_rules.py      # Prolog logic integration
-│   ├── gui/
-│   │   └── mapf_gui.py          # Pygame GUI
-│   └── scenarios/
-│       └── generator.py         # Scenario generation
-├── tests/
-│   └── test_core.py             # Unit tests
-├── main.py                      # Main GUI application
-├── compare.py                   # Comparison runner
-├── requirements.txt             # Dependencies
-└── README.md                    # This file
+├── backend/
+│   ├── algorithms/              # MAPF algorithm implementations
+│   │   ├── independent_astar.py # Independent A* (fast, conflicts)
+│   │   ├── cooperative_astar.py # Cooperative A* (reservation table)
+│   │   ├── cbs.py              # Conflict-Based Search (optimal)
+│   │   ├── mip_solver.py       # Mixed Integer Programming
+│   │   └── space_time_astar.py # Core pathfinding with time dimension
+│   ├── tests/                   # Comprehensive test suite (23 tests)
+│   │   ├── test_algorithms.py  # Algorithm correctness tests
+│   │   └── test_api.py         # API endpoint tests
+│   ├── server.py               # FastAPI REST API server
+│   ├── mapf_solver.py          # Main solver entry point
+│   ├── utils.py                # Helper classes (Pair, Agent)
+│   └── requirements.txt        # Python dependencies
+│
+├── frontend/
+│   ├── src/
+│   │   ├── main.ts            # Main UI controller & visualization
+│   │   ├── services/
+│   │   │   └── mapfService.ts # API communication layer
+│   │   ├── constants.ts       # UI constants, colors, defaults
+│   │   ├── utils.ts           # Helper functions
+│   │   └── style.css          # Responsive styling with Tailwind
+│   ├── index.html             # Entry HTML file
+│   ├── package.json           # Node.js dependencies
+│   ├── vite.config.ts         # Vite build configuration
+│   └── tailwind.config.js     # Tailwind CSS configuration
+│
+└── README.md                   # This file
 ```
 
 ---
 
-## Algorithms
+## 🎓 Learning Objectives Demonstrated
 
-### 1. Independent A* (Baseline)
-Plans each agent independently using Space-Time A*, ignoring other agents. Shows why coordination is necessary by demonstrating conflicts.
+### #cs162-abstraction
+- Clean separation between algorithm logic and visualization layer
+- Modular algorithm implementations with consistent interfaces
+- REST API abstracts backend complexity from frontend
 
-### 2. Cooperative A* (Prioritized Planning)
-Plans agents sequentially in priority order, using a reservation table to avoid conflicts with previously planned agents.
+### #cs162-separationofconcerns
+- **Backend:** Pure algorithm logic and data processing (Python)
+- **Frontend:** UI/UX, visualization, and user interactions (TypeScript)
+- **API Layer:** REST interface for clean communication
+- **Testing:** Separate validation and verification layer
 
-**Priority Policies:**
-- Distance-first: Shortest paths planned first
-- Constrained-first: Agents in narrow areas planned first
-- Logic-based: Prolog rules determine ordering
+### #cs162-webstandards
+- RESTful API design with FastAPI framework
+- CORS configuration for cross-origin requests
+- JSON data exchange format for interoperability
+- Modern HTML5/CSS3/ES2020+ JavaScript standards
+- Responsive design with CSS Grid and Flexbox
+- Type-safe development with TypeScript
 
-### 3. Conflict-Based Search (CBS)
-Optimal multi-agent planner using two-level search:
-- **High-level**: Best-first search over constraint trees
-- **Low-level**: Space-Time A* replanning for conflicting agents
-
-### 4. MIP/ILP Solver (CS164 Integration)
-Mixed-integer programming formulation for optimal solutions on small instances (≤8 agents). Used as benchmark for optimality gap analysis.
-
----
-
-## Scenarios
-
-### Open Field
-Random obstacles with agents navigating across the grid. Tests general coordination under low conflict pressure.
-
-### Corridor
-Narrow horizontal corridor forcing agents to coordinate passing and yielding. High conflict potential.
-
-### Bottleneck
-Wall with small opening in the middle. Agents must queue and coordinate passage through chokepoint.
-
-### Intersection
-Perpendicular corridors meeting at a central point. Tests intersection coordination and deadlock avoidance.
+### #cs162-testing
+- 23 comprehensive unit and integration tests
+- Algorithm correctness validation with diverse scenarios
+- API endpoint testing for all routes
+- Edge case coverage (blocked goals, large grids, conflicts)
+- Error handling and validation verification
 
 ---
 
-## Metrics
+## 🐛 Troubleshooting
 
-The system tracks comprehensive metrics:
+### Backend won't start
+```bash
+# Check Python version (need 3.11+)
+python --version
 
-- **Success Rate** - Percentage of agents reaching goals
-- **Sum of Costs (SOC)** - Total path lengths
-- **Makespan** - Time until all agents reach goals
-- **Conflicts** - Number of vertex and edge collisions
-- **Node Expansions** - A* search effort
-- **Runtime** - Algorithm execution time
-- **Optimality Gap** - Difference from MIP optimal solution
+# If version is wrong, try python3
+python3 --version
 
----
+# Install dependencies
+cd backend
+pip install -r requirements.txt
 
-## Example Results
-
-```
-Scenario: Corridor with 6 agents
-
-Independent A*:
-  Runtime: 0.023s
-  SOC: 84
-  Conflicts: 12
-  Success: False
-
-Cooperative A*:
-  Runtime: 0.067s
-  SOC: 96
-  Conflicts: 0
-  Success: True
-
-CBS:
-  Runtime: 0.234s
-  SOC: 92
-  Conflicts: 0
-  Success: True
+# Run server
+python server.py
 ```
 
----
+### Frontend won't start
+```bash
+# Check Node.js version (need 18+)
+node --version
 
-## Development
+# Clear cache and reinstall
+cd frontend
+rm -rf node_modules package-lock.json
+npm install
+npm run dev
+```
 
-### Adding New Algorithms
+### "Failed to generate scenario" error
+- ✅ Ensure backend is running on `http://localhost:8000`
+- ✅ Check backend terminal for any errors
+- ✅ Try with smaller parameters (grid 10, agents 2, obstacles 20%)
+- ✅ Restart both frontend and backend
 
-1. Create a new file in `src/algorithms/`
-2. Implement `plan(agents) -> (paths, metrics)` method
-3. Add to GUI and comparison runner
+### Algorithms running very slowly
+- Reduce grid size to 10 or less
+- Reduce number of agents to 4 or less
+- Avoid MIP solver for grids larger than 10
+- Avoid CBS for more than 6 agents
+- Lower obstacle percentage to 20%
 
-### Adding New Scenarios
+### Port already in use
+```bash
+# Backend (port 8000)
+# Find process: netstat -ano | findstr :8000
+# Kill process: taskkill /PID <process_id> /F
 
-1. Add method to `ScenarioGenerator` class
-2. Return `(GridMap, List[Agent])` tuple
-3. Add button/option in GUI
-
----
-
-## Report
-
-The accompanying report (max 3 pages) covers:
-
-1. **Problem Definition** - Multi-agent navigation with conflicts
-2. **Solution Specification** - Algorithm descriptions and implementation
-3. **Analysis** - Experimental results on test scenarios
-4. **References** - Academic papers and resources
-5. **Appendices** - Code, original proposal, HC/LO justification
-
----
-
-## References
-
-- Sharon, G., et al. (2015). "Conflict-Based Search For Optimal Multi-Agent Path Finding"
-- Silver, D. (2005). "Cooperative Pathfinding"
-- Hart, P., et al. (1968). "A Formal Basis for the Heuristic Determination of Minimum Cost Paths"
-
----
-
-## License
-
-This project is for educational purposes as part of CS152 coursework.
+# Frontend (port 5173)
+# Vite will automatically try port 5174, 5175, etc.
+```
 
 ---
 
-## Acknowledgments
+## 📝 API Documentation
 
-**Professor:** Rohan Shekhar  
-**Institution:** Minerva University  
-**Course:** CS152 - Artificial Intelligence
+### Generate Scenario
+```http
+POST /api/generate-scenario
+Content-Type: application/json
+
+{
+  "size": 10,
+  "num_agents": 2,
+  "obstacle_percentage": 0.2,
+  "seed": null  // Optional: for reproducible scenarios
+}
+```
+
+**Response:**
+```json
+{
+  "blocks": [[false, false, ...], ...],
+  "agents": [
+    {"id": 0, "start": [0, 0], "goal": [9, 9]},
+    {"id": 1, "start": [1, 1], "goal": [8, 8]}
+  ]
+}
+```
+
+### Run Algorithm
+```http
+POST /api/run-algorithm
+Content-Type: application/json
+
+{
+  "blocks": [[false, false, ...], ...],
+  "agents": [{"id": 0, "start": [0, 0], "goal": [9, 9]}],
+  "size": 10,
+  "algorithm": "cooperative",
+  "max_time": 100,
+  "priority_policy": "distance_first"  // Optional
+}
+```
+
+**Available Algorithms:**
+- `independent` - Independent A* (fast, may have conflicts)
+- `cooperative` - Cooperative A* (reservation table)
+- `cbs` - Conflict-Based Search (optimal)
+- `mip` - Mixed Integer Programming (very slow, optimal)
+
+**Response:**
+```json
+{
+  "paths": [[[0,0], [1,0], [2,0], ...], ...],
+  "exploration_orders": [...],
+  "metrics": {
+    "success": true,
+    "time_taken_ms": 123.45,
+    "explored_size": 500,
+    "num_conflicts": 0,
+    "sum_of_costs": 20,
+    "makespan": 12
+  },
+  "conflicts": []
+}
+```
 
 ---
 
-## Contact
+## 🤝 Contributing
 
-Omar Huss  
-GitHub: [@Omarhus01](https://github.com/Omarhus01)
+This is a CS152 final project. Contributions, issues, and feature requests are welcome!
+
+### Development Setup
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run tests (`pytest tests/ -v`)
+5. Commit changes (`git commit -m 'Add amazing feature'`)
+6. Push to branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is part of an academic assignment for CS152 - Artificial Intelligence.
+
+---
+
+## 👥 Authors
+
+- **Omar Hussein** - [@Omarhus01](https://github.com/Omarhus01)
+
+---
+
+## 🙏 Acknowledgments
+
+- CS152 course staff and instructors at Minerva University
+- FastAPI framework for elegant Python APIs
+- Vite.js for lightning-fast frontend development
+- MAPF research community for algorithmic foundations
+- PuLP library for linear programming support
+
+---
+
+## 📚 References
+
+- **Multi-Agent Pathfinding:** Stern et al. (2019) - "Multi-Agent Pathfinding: Definitions, Variants, and Benchmarks"
+- **Conflict-Based Search:** Sharon et al. (2015) - "Conflict-based search for optimal multi-agent pathfinding"
+- **Cooperative A*:** Silver (2005) - "Cooperative Pathfinding"
+
+---
+
+**Enjoy exploring Multi-Agent Pathfinding! 🚀**
