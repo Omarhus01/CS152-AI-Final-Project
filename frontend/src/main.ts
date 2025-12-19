@@ -143,6 +143,12 @@ class MAPFApp {
               </div>
             </div>
             
+            <div class="mt-4 mb-4 p-4 rounded" style="background: #fef3c7; border-left: 4px solid #f59e0b;">
+              <p class="mb-0" style="color: #92400e; line-height: 1.6; font-size: 1.05rem;">
+                <strong style="font-size: 1.1rem;">💡 Recommended:</strong> Grid ≤15, Agents ≤6, Obstacles ≤30% • Balanced speed and quality
+              </p>
+            </div>
+            
             <button id="run-comparison-btn" class="btn btn-success w-full" style="padding: 1.2rem; font-size: 1.3rem; font-weight: bold;">Run Both Algorithms</button>
           </div>
         </div>

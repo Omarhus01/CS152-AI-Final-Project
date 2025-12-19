@@ -1,10 +1,10 @@
-# 🤖 Multi-Agent Pathfinding (MAPF) Visualizer
+# Multi-Agent Pathfinding (MAPF) Visualizer
 
 A full-stack web application for visualizing and comparing Multi-Agent Pathfinding algorithms. Built with FastAPI (Python) backend and Vite + TypeScript frontend.
 
-![Tests](https://img.shields.io/badge/Tests-23%20Passing-green) ![Python](https://img.shields.io/badge/Python-3.11-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
 
-## 📋 About This Project
+
+## About This Project
 
 Multi-Agent Pathfinding (MAPF) finds collision-free paths for multiple agents simultaneously. Unlike single-agent pathfinding, **all agents must reach their goals without conflicts** (no two agents in same cell at same time, no edge crossing). This is an NP-hard problem.
 
@@ -38,6 +38,7 @@ cd CS152-AI-Final-Project
 cd backend
 pip install -r requirements.txt
 python server.py
+# On macOS, you might need: python3 server.py
 ```
 ✅ Backend running at: `http://localhost:8000`
 
@@ -151,36 +152,6 @@ CS152-AI-Final-Project/
 │
 └── README.md                   # This file
 ```
-
----
-
-## 🎓 Learning Objectives Demonstrated
-
-### #cs162-abstraction
-- Clean separation between algorithm logic and visualization layer
-- Modular algorithm implementations with consistent interfaces
-- REST API abstracts backend complexity from frontend
-
-### #cs162-separationofconcerns
-- **Backend:** Pure algorithm logic and data processing (Python)
-- **Frontend:** UI/UX, visualization, and user interactions (TypeScript)
-- **API Layer:** REST interface for clean communication
-- **Testing:** Separate validation and verification layer
-
-### #cs162-webstandards
-- RESTful API design with FastAPI framework
-- CORS configuration for cross-origin requests
-- JSON data exchange format for interoperability
-- Modern HTML5/CSS3/ES2020+ JavaScript standards
-- Responsive design with CSS Grid and Flexbox
-- Type-safe development with TypeScript
-
-### #cs162-testing
-- 23 comprehensive unit and integration tests
-- Algorithm correctness validation with diverse scenarios
-- API endpoint testing for all routes
-- Edge case coverage (blocked goals, large grids, conflicts)
-- Error handling and validation verification
 
 ---
 
