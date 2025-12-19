@@ -5,13 +5,10 @@ import {
   DEFAULT_OBSTACLE_PCT,
   OBSTACLE_COLOR,
   EMPTY_CELL_COLOR,
-  START_COLOR,
-  GOAL_COLOR,
-  PATH_COLOR,
   AGENT_COLORS,
   ANIMATION_DELAY,
 } from './constants';
-import { sleep, make2dArray } from './utils';
+import { sleep } from './utils';
 import {
   generateScenario,
   runAlgorithm,
@@ -504,9 +501,6 @@ class MAPFApp {
     });
     
     for (let t = 0; t < maxTime; t++) {
-      // Check for conflicts at this timestep
-      const currentConflicts = conflictsByTime.get(t) || [];
-      
       for (let agentId = 0; agentId < paths.length; agentId++) {
         if (t < paths[agentId].length) {
           const [r, c] = paths[agentId][t];
