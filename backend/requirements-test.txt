@@ -1,0 +1,8 @@
+"""
+Test requirements for backend testing.
+Install with: pip install -r requirements-test.txt
+"""
+
+pytest==7.4.3
+pytest-cov==4.1.0
+httpx==0.25.2

@@ -1,0 +1,5 @@
+numpy>=1.24.0
+pygame>=2.5.0
+matplotlib>=3.7.0
+pulp>=2.7.0
+pyswip>=0.2.10
