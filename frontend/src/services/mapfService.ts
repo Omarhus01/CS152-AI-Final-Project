@@ -1,5 +1,5 @@
 // Use relative URL for production (Vercel), localhost for development
-export const API_URL = import.meta.env.PROD ? '/api' : 'http://localhost:8000';
+export const API_URL = import.meta.env.PROD ? '' : 'http://localhost:8000';
 
 export interface Agent {
   id: number;
